@@ -13,7 +13,10 @@
 </head>
 <body>
     <h1>Blackjack</h1>
-    <div><button class="button" id="play-button">Play</button></div>
+    <div>
+        <button class="button" id="play-button">Play</button>
+        <button class="button" id="reset-button" style="display: none">Reset</button>
+    </div>
     <div class="container" id="board">
         <h2>Dealer:</h2>
         <div class="dealer-cards">
@@ -21,8 +24,8 @@
         </div>
         <div class="player-cards"></div>
         <div class="buttons">
-            <button class="button" id="hit-btn">HIT</button>
-            <button class="button" id="hold-btn">HOLD</button>
+            <button class="button opaque" id="hit-btn">HIT</button>
+            <button class="button opaque" id="hold-btn">HOLD</button>
         </div>
         <h2 class="player">Player:</h2>
         <div id="message"></div>

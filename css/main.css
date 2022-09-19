@@ -5,6 +5,11 @@ h1 {
     text-align: center;
 }
 
+body > div {
+    display: flex;
+    height: 100px;
+}
+
 img {
     animation-duration: 3s;
     animation-name: faceInOut;
@@ -95,6 +100,7 @@ h2 {
 
 /* From uiverse.io by @alexroumi */
 .button {
+    transition: 1s;
     margin: 10px;
     padding: 15px 25px;
     border: unset;
@@ -135,10 +141,19 @@ h2 {
 }
 
 #play-button {
-    display: flex;
-    justify-content: center;
+    display: inline-block;
+    margin: auto;
 }
 
+#reset-button {
+    display: inline-block;
+    margin: auto;
+
+}
 .overlap {
+    display: none;
+}
+
+.opaque {
     display: none;
 }

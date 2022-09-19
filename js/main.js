@@ -78,19 +78,12 @@ const hitBtn = document.getElementById("hit-btn");
 const holdBtn = document.getElementById("hold-btn");
 const playBtn = document.getElementById("play-button");
 const message = document.getElementById("message");
-
+const resetBtn = document.getElementById("reset-button");
 
 
 /*----- event listeners -----*/
 playBtn.addEventListener("click", function () {
-    deckBuilder();
-    drawCardP();
-    drawCardP();
-    addCardBack();
-    drawCardD();
-    document.querySelector(".dealer-cards :nth-child(2)").classList.add("overlap")
-    drawCardD();
-    render();
+   init();
 })
 
 hitBtn.addEventListener("click", function () {
@@ -109,20 +102,30 @@ holdBtn.addEventListener("click", function () {
                 countScoreD();
                 checkScoreD();
             }
-            checkScoreD();
-        }
+        checkScoreD();
+    }
+});
 
-    })
-
+resetBtn.addEventListener("click", function () {
+    document.location.reload();
+})
 
 
 
 /*----- functions -----*/
 function init() {
     deckBuilder();
-    boardBuilder();
+    drawCardP();
+    drawCardP();
+    addCardBack();
+    drawCardD();
+    document.querySelector(".dealer-cards :nth-child(2)").classList.add("overlap")
+    drawCardD();
+    render();
+    playBtn.style.display = "none";
+    resetBtn.style.display = "inline-block";
+    document.querySelectorAll(".buttons button").forEach(button => button.classList.remove("opaque"));
 }
-
 
 function deckBuilder() {
     for (let value of VALUES) {
@@ -141,6 +144,12 @@ function drawCardP() {
     const card = document.createElement("img");
     card.setAttribute("src", `cards/${DECK.pop()}.png`);
     playerCards.appendChild(card);
+    card.animate([
+        {opacity: "0"},
+        {opacity: "1"},
+    ], {
+        duration: 1000,
+    });
 }
 
 function countScoreP () {
@@ -172,12 +181,24 @@ function drawCardD() {
     const card = document.createElement("img");
     card.setAttribute("src", `cards/${DECK.pop()}.png`);
     dealerCards.appendChild(card);
+    card.animate([
+        {opacity: "0"},
+        {opacity: "1"},
+    ], {
+        duration: 1000,
+    });
 }
 
 function addCardBack() {
     const cardBack = document.createElement("img");
     cardBack.setAttribute("src", `cards/cardback.png`);
     dealerCards.appendChild(cardBack);
+    cardBack.animate([
+        {opacity: "0"},
+        {opacity: "1"},
+    ], {
+        duration: 1000,
+    });
 }
 
 
@@ -226,12 +247,16 @@ function checkScoreD () {
                 switchOverlap();
             } else if (pScorePoints > 21) {
                 isWinnerD = false;
-                message.innerText = "You win! Dealer has over 21";
+                message.innerText = "You win! Dealer has over 21 points";
                 switchOverlap();
+            } else if (dScorePoints > pScorePoints) {
+                message.innerText = "You lose! The dealer has more points!";
+            } else if (pScorePoints > dScorePoints) {
+                message.innerText = "You win! You have more points!";
             }
         } else if (dScorePoints > 21) {
             isWinnerD = false;
-            message.innerText = "You win! Dealer has over 21";
+            message.innerText = "You win! Dealer has over 21 points";
             switchOverlap();
         } else if (dScorePoints === 21) {
             isWinnerD = true;
