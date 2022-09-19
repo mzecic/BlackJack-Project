@@ -6,10 +6,11 @@ h1 {
 }
 
 img {
-    transform: scale3d();
     width: 211.55px;
     height: 307.19;
     margin: 10px;
+    transition: cubic-bezier(1, 0, 0, 1);
+    transform: all 1s;
 }
 
 .hidden {
@@ -133,4 +134,8 @@ h2 {
 #play-button {
     display: flex;
     justify-content: center;
+}
+
+.overlap {
+    display: none;
 }

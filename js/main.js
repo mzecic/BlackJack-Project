@@ -48,7 +48,7 @@ const POINTS = {
     "Ad": 11,
     "Ah": 11,
     "As": 11,
-    "Jb": 10,
+    "Jh": 10,
     "Jc": 10,
     "Jd": 10,
     "Js": 10,
@@ -67,7 +67,7 @@ const VALUES = ["s", "c", "h", "d"]
 
 
 /*----- app's state (variables) -----*/
-let turn, isWinner, board, pScore, dScore, pScorePoints, dScorePoints
+let turn, isWinnerP, isWinnerD, board, pScore, dScore, pScorePoints, dScorePoints
 
 
 
@@ -88,16 +88,26 @@ playBtn.addEventListener("click", function () {
     drawCardP();
     addCardBack();
     drawCardD();
+    document.querySelector(".dealer-cards :nth-child(2)").classList.add("overlap")
+    drawCardD();
     render();
 })
 
 hitBtn.addEventListener("click", function () {
-    if (isWinner === undefined) {
+    if (isWinnerP === undefined) {
         drawCardP();
         render();
     }
 })
 
+holdBtn.addEventListener("click", function () {
+    if (isWinnerD === undefined) {
+        document.querySelector(".dealer-cards :nth-child(2)").classList.remove("overlap")
+        document.querySelector(".dealer-cards :nth-child(1)").classList.add("overlap")
+        // drawCardD();
+        render();
+    }
+})
 
 
 
@@ -119,7 +129,6 @@ function deckBuilder() {
 
 function boardBuilder() {
     turn = 1;
-
 }
 
 function drawCardP() {
@@ -130,29 +139,45 @@ function drawCardP() {
 
 function countScoreP () {
     pScore = document.querySelectorAll(".player-cards img");
+    pScoreArray = Array.from(pScore);
     pScorePoints = 0;
+    let cardP;
     for (let card of pScore) {
-        let cardP = card.getAttribute("src").slice(6, 8);
+        cardP = card.getAttribute("src").slice(6, 8);
         pScorePoints += POINTS[cardP];
     }
-    if (pScorePoints > 21) {
-        isWinner = false;
-        message.innerText = "You lose!"
-    // } else if (pScore.some((img) =>  {
-    //     // return img.getAttribute("src").slice(6, 7) === "A"
-    //     // } && pScorePoints > 21) {
-    //     // pScorePoints -= 10;
-    // }
+
+    if (pScorePoints > 21 && pScoreArray.some(card => card.getAttribute("src").slice(6, 7) === "A")) {
+        pScorePoints -= 10;
+    } else if (pScorePoints > 21) {
+        isWinnerP = false;
+        message.innerText = "You lose!";
+    } else if (pScorePoints === 21) {
+        isWinnerP = true;
+        message.innerText = "You win!";
     }
+
 }
 
 function countScoreD() {
     dScore = document.querySelectorAll(".dealer-cards img");
+    dScoreArray = Array.from(dScore);
     dScorePoints = 0;
     for (let card of dScore) {
         let cardD = card.getAttribute("src").slice(6, 8);
         dScorePoints += POINTS[cardD];
     }
+
+    if (dScorePoints > 21 && dScoreArray.some(card => card.getAttribute("src").slice(6, 7) === "A")) {
+        dScorePoints -= 10;
+    } else if (dScorePoints > 21) {
+        isWinnerD = false;
+        message.innerText = "You win! Dealer has over 21";
+    } else if (dScorePoints === 21) {
+        isWinnerD = true;
+        message.innerText = "You lose! Dealer has Blackjack!";
+    }
+
 }
 
 function drawCardD() {
