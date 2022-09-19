@@ -6,11 +6,14 @@ h1 {
 }
 
 img {
+    animation-duration: 3s;
+    animation-name: faceInOut;
     width: 211.55px;
     height: 307.19;
     margin: 10px;
     transition: cubic-bezier(1, 0, 0, 1);
     transform: all 1s;
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .hidden {
@@ -20,7 +23,7 @@ img {
 .container {
     width: 1510px;
     height: 768px;
-    background-color: #a7c3eb;
+    background-color: #d6e6fa;
     display: grid;
     margin: 0 auto;
     grid-template-columns: 15% 70% 15%;

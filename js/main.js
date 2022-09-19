@@ -96,18 +96,24 @@ playBtn.addEventListener("click", function () {
 hitBtn.addEventListener("click", function () {
     if (isWinnerP === undefined) {
         drawCardP();
-        render();
+        countScoreP();
+        checkScoreP();
     }
 })
 
 holdBtn.addEventListener("click", function () {
-    if (isWinnerD === undefined) {
-        document.querySelector(".dealer-cards :nth-child(2)").classList.remove("overlap")
-        document.querySelector(".dealer-cards :nth-child(1)").classList.add("overlap")
-        // drawCardD();
-        render();
-    }
-})
+    if (isWinnerD === undefined && isWinnerP === undefined) {
+        switchOverlap();
+            while (dScorePoints < 17 || !dScorePoints) {
+                drawCardD();
+                countScoreD();
+                checkScoreD();
+            }
+            checkScoreD();
+        }
+
+    })
+
 
 
 
@@ -146,17 +152,6 @@ function countScoreP () {
         cardP = card.getAttribute("src").slice(6, 8);
         pScorePoints += POINTS[cardP];
     }
-
-    if (pScorePoints > 21 && pScoreArray.some(card => card.getAttribute("src").slice(6, 7) === "A")) {
-        pScorePoints -= 10;
-    } else if (pScorePoints > 21) {
-        isWinnerP = false;
-        message.innerText = "You lose!";
-    } else if (pScorePoints === 21) {
-        isWinnerP = true;
-        message.innerText = "You win!";
-    }
-
 }
 
 function countScoreD() {
@@ -164,20 +159,13 @@ function countScoreD() {
     dScoreArray = Array.from(dScore);
     dScorePoints = 0;
     for (let card of dScore) {
+        if (card.getAttribute("src") === "cards/cardback.png") {
+            dScorePoints += 0;
+        } else {
         let cardD = card.getAttribute("src").slice(6, 8);
         dScorePoints += POINTS[cardD];
+        }
     }
-
-    if (dScorePoints > 21 && dScoreArray.some(card => card.getAttribute("src").slice(6, 7) === "A")) {
-        dScorePoints -= 10;
-    } else if (dScorePoints > 21) {
-        isWinnerD = false;
-        message.innerText = "You win! Dealer has over 21";
-    } else if (dScorePoints === 21) {
-        isWinnerD = true;
-        message.innerText = "You lose! Dealer has Blackjack!";
-    }
-
 }
 
 function drawCardD() {
@@ -196,4 +184,67 @@ function addCardBack() {
 function render() {
     countScoreD();
     countScoreP();
+    checkScoreD();
+    checkScoreP();
+}
+
+function switchOverlap () {
+    document.querySelector(".dealer-cards :nth-child(2)").classList.remove("overlap");
+    document.querySelector(".dealer-cards :nth-child(1)").classList.add("overlap");
+}
+
+function checkScoreP () {
+    if (pScorePoints > 21 && pScoreArray.some(card => card.getAttribute("src").slice(6, 7) === "A")) {
+        pScorePoints -= 10;
+        if (pScorePoints === 21) {
+            isWinnerP = true;
+            message.innerText = "You win! You got Backjack!";
+            switchOverlap();
+        } else if (pScorePoints > 21) {
+            isWinnerP = false;
+            message.innerText = "You lose! You have over 21 points!";
+            switchOverlap();
+        }
+    } else if (pScorePoints > 21) {
+        isWinnerP = false;
+        message.innerText = "You lose! You have over 21 points!";
+        switchOverlap();
+    } else if (pScorePoints === 21) {
+        isWinnerP = true;
+        message.innerText = "You win! You got Blackjack!";
+        switchOverlap();
+    }
+}
+
+function checkScoreD () {
+    if (document.querySelector(".dealer-cards :nth-child(1)").getAttribute("class") === "overlap") {
+        if (dScorePoints > 21 && dScoreArray.some(card => card.getAttribute("src").slice(6, 7) === "A")) {
+            dScorePoints -= 10;
+            if (dScorePoints === 21) {
+                isWinnerD = true;
+                message.innerText = "You lose! Dealer has Blackjack!";
+                switchOverlap();
+            } else if (pScorePoints > 21) {
+                isWinnerD = false;
+                message.innerText = "You win! Dealer has over 21";
+                switchOverlap();
+            }
+        } else if (dScorePoints > 21) {
+            isWinnerD = false;
+            message.innerText = "You win! Dealer has over 21";
+            switchOverlap();
+        } else if (dScorePoints === 21) {
+            isWinnerD = true;
+            message.innerText = "You lose! Dealer has Blackjack!";
+            switchOverlap();
+        } else if (dScorePoints === pScorePoints) {
+            isWinnerD = null;
+            message.innerText = "It's a tie!";
+            switchOverlap();
+        } else if (dScorePoints > pScorePoints) {
+            message.innerText = "You lose! The dealer has more points!";
+        } else if (pScorePoints > dScorePoints) {
+            message.innerText = "You win! You have more points!";
+        }
+    }
 }
