@@ -1,11 +1,5 @@
 /*----- constants -----*/
 const DECK = [];
-const PLAYER = {
-    total: 0,
-}
-const DEALER = {
-    total: 0,
-}
 
 const POINTS = {
     "2c": 2,
@@ -67,7 +61,7 @@ const VALUES = ["s", "c", "h", "d"]
 
 
 /*----- app's state (variables) -----*/
-let turn, isWinnerP, isWinnerD, board, pScore, dScore, pScorePoints, dScorePoints
+let isWinnerP, isWinnerD, pScore, dScore, pScorePoints, dScorePoints
 
 
 
@@ -134,10 +128,6 @@ function deckBuilder() {
         }
     }
     DECK.sort((a, b) => 0.5 - Math.random());
-}
-
-function boardBuilder() {
-    turn = 1;
 }
 
 function drawCardP() {
@@ -212,11 +202,18 @@ function render() {
 function switchOverlap () {
     document.querySelector(".dealer-cards :nth-child(2)").classList.remove("overlap");
     document.querySelector(".dealer-cards :nth-child(1)").classList.add("overlap");
+    document.querySelector(".dealer-cards :nth-child(2)").animate([
+        {opacity: "0"},
+        {opacity: "1"},
+    ], {
+        duration: 1000,
+    });
 }
 
 function checkScoreP () {
-    if (pScorePoints > 21 && pScoreArray.some(card => card.getAttribute("src").slice(6, 7) === "A")) {
-        pScorePoints -= 10;
+    if (pScorePoints > 21) {
+        pScoreArray.forEach((card) => {if (card.getAttribute("src").slice(6, 7) === "A") {return pScorePoints -= 10}})
+        // pScorePoints -= 10;
         if (pScorePoints === 21) {
             isWinnerP = true;
             message.innerText = "You win! You got Backjack!";
@@ -239,7 +236,7 @@ function checkScoreP () {
 
 function checkScoreD () {
     if (document.querySelector(".dealer-cards :nth-child(1)").getAttribute("class") === "overlap") {
-        if (dScorePoints > 21 && dScoreArray.some(card => card.getAttribute("src").slice(6, 7) === "A")) {
+        if (dScorePoints > 21 && dScoreArray.forEach(card => card.getAttribute("src").slice(6, 7) === "A")) {
             dScorePoints -= 10;
             if (dScorePoints === 21) {
                 isWinnerD = true;
