@@ -80,15 +80,26 @@ playBtn.addEventListener("click", function () {
    init();
 })
 
-hitBtn.addEventListener("click", function () {
+hitBtn.addEventListener("click", handleClickHit);
+
+holdBtn.addEventListener("click", handleClickHold);
+
+resetBtn.addEventListener("click", function () {
+    document.location.reload();
+})
+
+
+
+/*----- functions -----*/
+function handleClickHit () {
     if (isWinnerP === undefined) {
         drawCardP();
         countScoreP();
         checkScoreP();
     }
-})
+}
 
-holdBtn.addEventListener("click", function () {
+function handleClickHold () {
     if (isWinnerD === undefined && isWinnerP === undefined) {
         switchOverlap();
             while (dScorePoints < 17 || !dScorePoints) {
@@ -98,15 +109,10 @@ holdBtn.addEventListener("click", function () {
             }
         checkScoreD();
     }
-});
+    hitBtn.removeEventListener("click", handleClickHit)
+    holdBtn.removeEventListener("click", handleClickHold);
+}
 
-resetBtn.addEventListener("click", function () {
-    document.location.reload();
-})
-
-
-
-/*----- functions -----*/
 function init() {
     deckBuilder();
     drawCardP();
