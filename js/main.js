@@ -217,9 +217,10 @@ function switchOverlap () {
 }
 
 function checkScoreP () {
-    if (pScorePoints > 21 && pScoreArray.forEach((card) => {
-        if (card.getAttribute("src").slice(6, 7) === "A") {pScorePoints -= 10}
-        })) {
+    if (pScorePoints > 21 && pScoreArray.includes(pScoreArray.find(card => card.getAttribute("src").slice(6, 7) === "A"))) {
+        pScoreArray.forEach((card) => {
+            if (card.getAttribute("src").slice(6, 7) === "A") { return pScorePoints -= 10}
+            });
         if (pScorePoints > 21) {
             isWinnerP = false;
             message.innerText = "You lose! You have over 21 points";
@@ -242,9 +243,10 @@ function checkScoreP () {
 
 function checkScoreD () {
     if (document.querySelector(".dealer-cards :nth-child(1)").getAttribute("class") === "overlap") {
-        if (dScorePoints > 21 && dScoreArray.forEach((card) => {
-            if (card.getAttribute("src").slice(6, 7) === "A") {dScorePoints -= 10}
-            })) {
+        if (dScorePoints > 21 && dScoreArray.includes(dScoreArray.find(card => card.getAttribute("src").slice(6, 7) === "A"))) {
+            dScoreArray.forEach((card) => {
+                if (card.getAttribute("src").slice(6, 7) === "A") { return dScorePoints -= 10}
+                });
             if (dScorePoints > 21) {
                 isWinnerD = false;
                 message.innerText = "You win! Dealer has over 21 points!";
