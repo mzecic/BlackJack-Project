@@ -251,7 +251,7 @@ function checkScoreD () {
                 isWinnerD = true;
                 message.innerText = "You lose! Dealer has Blackjack!";
                 switchOverlap();
-            } else if (pScorePoints > 21) {
+            } else if (dScorePoints > 21) {
                 isWinnerD = false;
                 message.innerText = "You win! Dealer has over 21 points";
                 switchOverlap();
