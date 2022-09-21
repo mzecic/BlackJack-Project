@@ -217,44 +217,47 @@ function switchOverlap () {
 }
 
 function checkScoreP () {
-    if (pScorePoints > 21 || pScorePoints > 21 && pScoreArray.forEach((card) => {
-        if (card.getAttribute("src").slice(6, 7) === "A") {return pScorePoints -= 10}
-    })) {
+    if (pScorePoints > 21 || pScorePoints > 21 && aceCaseP()) {
             isWinnerP = false;
             message.innerText = "You lose! You have over 21 points!";
             switchOverlap();
-        if (pScorePoints === 21) {
+    } else if (pScorePoints === 21 || pScorePoints === 21 && aceCaseP()) {
             isWinnerP = true;
             message.innerText = "You win! You got Backjack!";
             switchOverlap();
-        } else if (pScorePoints > 21) {
-            isWinnerP = false;
-            message.innerText = "You lose! You have over 21 points!";
-            switchOverlap();
         }
-
     }
-}
+
 
 function checkScoreD () {
     if (document.querySelector(".dealer-cards :nth-child(1)").getAttribute("class") === "overlap") {
-        if (dScorePoints > 21 || dScorePoints > 21 && dScoreArray.forEach((card) => {
-            if (card.getAttribute("src").slice(6, 7) === "A") {return dScorePoints -= 10}
-        })) {
+        if (dScorePoints > 21 || dScorePoints > 21 && aceCaseD()) {
             isWinnerD = false;
             message.innerText = "You win! Dealer has over 21 points";
             switchOverlap();
-        } else if (dScorePoints === 21) {
+        } else if (dScorePoints === 21 || dScorePoints === 21 && aceCaseD()) {
             isWinnerD = true;
             message.innerText = "You lose! Dealer has Blackjack!";
             switchOverlap();
-        } else if (dScorePoints > pScorePoints) {
+        } else if (dScorePoints > pScorePoints || dScorePoints > pScorePoints && dScorePoints > 21 && aceCaseD()) {
             message.innerText = "You lose! The dealer has more points!";
-        } else if (pScorePoints > dScorePoints) {
+        } else if (pScorePoints > dScorePoints || pScorePoints > dScorePoints && pScorePoints > 21 && aceCaseD()) {
             message.innerText = "You win! You have more points!";
-        } else if (dScorePoints == pScorePoints) {
+        } else if (dScorePoints === pScorePoints) {
             isWinnerD = null;
             message.innerText = "It's a tie!";
         }
     }
+}
+
+function aceCaseP () {
+    return pScoreArray.forEach((card) => {
+        if (card.getAttribute("src").slice(6, 7) === "A") {return pScorePoints -= 10}
+    })
+}
+
+function aceCaseD () {
+    return dScoreArray.forEach((card) => {
+        if (card.getAttribute("src").slice(6, 7) === "A") {return dScorePoints -= 10}
+    })
 }
