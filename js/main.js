@@ -218,8 +218,9 @@ function switchOverlap () {
 
 function checkScoreP () {
     if (pScorePoints > 21) {
-        pScoreArray.forEach((card) => {if (card.getAttribute("src").slice(6, 7) === "A") {return pScorePoints -= 10}})
-        // pScorePoints -= 10;
+        pScoreArray.forEach((card) => {
+            if (card.getAttribute("src").slice(6, 7) === "A") {return pScorePoints -= 10}
+        });
         if (pScorePoints === 21) {
             isWinnerP = true;
             message.innerText = "You win! You got Backjack!";
@@ -242,8 +243,10 @@ function checkScoreP () {
 
 function checkScoreD () {
     if (document.querySelector(".dealer-cards :nth-child(1)").getAttribute("class") === "overlap") {
-        if (dScorePoints > 21 && dScoreArray.forEach(card => card.getAttribute("src").slice(6, 7) === "A")) {
-            dScorePoints -= 10;
+        if (dScorePoints > 21) {
+            pScoreArray.forEach((card) => {
+                if (card.getAttribute("src").slice(6, 7) === "A") {return pScorePoints -= 10}
+            });
             if (dScorePoints === 21) {
                 isWinnerD = true;
                 message.innerText = "You lose! Dealer has Blackjack!";
