@@ -1,6 +1,6 @@
 # Blackjack
 
-Blackjack.
+Game rules:
 
 How do you beat the dealer?
 
