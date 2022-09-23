@@ -1,4 +1,4 @@
-# BlackJack-Project
+# Blackjack
 
 Blackjack.
 
