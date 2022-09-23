@@ -2,9 +2,16 @@
 
 Blackjack.
 
-First one to get to 21 points, or has more points wins. Ace counts as 1 if it would make you go over 21 points, otherwise it's 11 points.
-10, Jack, Queen and King are 10. Rest of cards' points correspond to the numbers on the cards. Game starts with 2 cards dealt to the player face up, while the dealer deals takes 1 card faceup and 1 facedown.
-There are 2 buttons that control whether you want to be dealt a card or pass the turn to the dealer to make the choice.
+How do you beat the dealer?
+
+By drawing a hand value that is higher than the dealer’s hand value
+By the dealer drawing a hand value that goes over 21.
+By drawing a hand value of 21 on your first two cards, when the dealer does not.
+
+How do you lose to the dealer? 
+
+Your hand value exceeds 21.
+The dealers hand has a greater value than yours at the end of the round
 
 Link to the game => https://mzecic.github.io/BlackJack-Project/
 
@@ -14,4 +21,11 @@ Link to the game => https://mzecic.github.io/BlackJack-Project/
 
 Technologies used: HTML, CSS, JS
 
-Has some basic animations. Planning on adding intervals to each card appearing.
+Icebox features:
+- Has some basic animations, planning on adding intervals to each card appearing
+- more animations
+- adding sound for deck shuffle and card draw
+- scoreboard and betting functions
+
+
+
